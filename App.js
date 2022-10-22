@@ -1,65 +1,75 @@
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView} from 'react-native';
 
 export default function App() { // This is the root component
+  const [enteredGoalText, setEnteredGoalText] = useState('') // '' because we are handling text
+  const [lifeGoals, setLifeGoals] = useState([]) // [] because we are handling array 
+
+  function goalInputHandler(enteredText) {
+    setEnteredGoalText(enteredText)
+  }
+
+  function addGoalHandler() {
+    setLifeGoals(currentLifeGoals => [
+      ...currentLifeGoals, 
+      enteredGoalText
+    ])
+  }
+
   return (
-    // <View style={styles.appContainer}>
-    //   <View style={styles.inputContainer}>
-    //     <TextInput style={styles.textInput} placeholder='Your life goal!'/>
-    //     <Button title='Add Goal'/>
-    //   </View>
-    //   <View>
-    //     <Text>List of goals...</Text>
-    //   </View>
-    // </View>
-    <View style={{ padding: 50, flexDirection: 'row', width: '100%', height: 300, justifyContent: 'space-around', alignItems: 'stretch' }}>
-    <View
-      style={{
-        backgroundColor: 'red',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Text>1</Text>
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput 
+          style={styles.textInput} 
+          placeholder='Your life goal!' 
+          onChangeText={goalInputHandler} />
+        <Button title='Add Goal' onPress={addGoalHandler}/>
+      </View>
+      <View style={styles.goalsContainer}>
+        <ScrollView> 
+          {lifeGoals.map((goal) => (
+            <View key={goal} style={styles.goalItem}>
+              <Text style={styles.goalText}> {goal}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
     </View>
-    <View
-      style={{
-        backgroundColor: 'blue',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Text>2</Text>
-    </View>
-    <View
-      style={{
-        backgroundColor: 'green',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Text>3</Text>
-    </View>
-  </View>
   );
 }
 
 const styles = StyleSheet.create({ // Styling for root component 
   appContainer: {
-    padding: 50
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 16
   },
   inputContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 24,
+    borderBottomWidth: 1, // adds one line across the screen
+    borderColor: '#cccccc'
   },
   textInput: {
     borderWidth: 1,
     borderColor: '#cccccc',
-    width: '80%',
+    width: '70%',
     marginRight: 8,
     padding: 8
+  },
+  goalsContainer: {
+    flex: 5
+  },
+  goalItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: '#5e08cc',
+  },
+  goalText: {
+    color: 'white'
   }
-  
-});
+})
