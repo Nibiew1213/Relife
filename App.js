@@ -42,7 +42,7 @@ export default function App() { // This is the root component
         onAddGoal={addGoalHandler} 
         onCancel={endAddGoalHandler} 
       />
-      <View style={styles.goalsContainer}>
+      <View style={styles.goalsContainer}> 
         <FlatList 
           data={lifeGoals} 
           renderItem={itemData => {
