@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar'
 
 import GoalItem from './components/GoalItem'
-import GoalInput from './components/GoalInput'
+import NewGoalScreen from './screens/NewGoalScreen'
 
 
 export default function App() { // This is the root component
@@ -41,7 +41,7 @@ export default function App() { // This is the root component
           color="#5e0acc"
           onPress={startAddGoalHandler}
         />
-        <GoalInput 
+        <NewGoalScreen 
           visible={modalIsVisible} 
           onAddGoal={addGoalHandler} 
           onCancel={endAddGoalHandler} 
