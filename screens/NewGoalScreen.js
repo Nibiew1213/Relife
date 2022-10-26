@@ -18,10 +18,21 @@ function addGoalHandler() {
             <View style={styles.inputContainer}>
                 <Image style={styles.image} source={require('../assets/images/addNewGoal.png')} />
                 <TextInput 
-                style={styles.textInput} 
-                placeholder='Your life goal!' 
-                onChangeText={goalInputHandler} 
-                value={enteredGoalText}
+                    style={styles.textInput} 
+                    placeholder='New Goal Title' 
+                    onChangeText={goalInputHandler} 
+                    value={enteredGoalText}
+                    maxLength={70}
+                    autoCapitalize="none"
+                    autoCorrect={false} 
+                />
+                <TextInput 
+                    style={styles.textInput} 
+                    placeholder='Description' 
+                />
+                 <TextInput 
+                    style={styles.textInput} 
+                    placeholder='Targetted Completion Date' 
                 />
                 <View style={styles.buttonContainer}>
                     <View style={styles.button}>
@@ -59,7 +70,8 @@ const styles = StyleSheet.create({
         color: '#120438',
         borderRadius: 6,
         width: '100%',
-        padding: 16
+        padding: 16,
+        margin: 5
     },
     buttonContainer: {
         marginTop: 16,
