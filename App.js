@@ -4,88 +4,90 @@ import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Ionicons } from '@expo/vector-icons' 
 
 import AllGoalsHome from './screens/AllGoalsHome'
-import GoalItem from './components/GoalItem'
+import GoalItem from './components/GoalsOutput/GoalItem'
 import NewGoal from './screens/NewGoal'
-import ProgressGoal from './screens/ProgressGoal'
+import ManageGoal from './screens/ManageGoal'
 import CompletedGoal from './screens/CompletedGoal';
+
+import { GlobalStyles } from './constants/styles'
+import IconButton from './components/UI/IconButton'
 
 const Stack = createNativeStackNavigator() // will hold an object that gives access to 2 components -> Navigator component and Register-Screens Component 
 const BottomTabs = createBottomTabNavigator() 
 
 function GoalsOverview() {
   return (
-    <BottomTabs.Navigator>
-      <BottomTabs.Screen name="AllGoalsHome" component={AllGoalsHome} /> 
-      <BottomTabs.Screen name="NewGoal" component={NewGoal} />
+    <BottomTabs.Navigator 
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: 'white',
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({tintColor}) => (
+          <IconButton 
+            icon="add" 
+            size={24} 
+            color={tintColor} 
+            onPress={() => {
+              navigation.navigate('ManageGoal')
+            }}
+          />
+        )        
+      })}
+      >
+      <BottomTabs.Screen 
+        name="AllGoalsHome" 
+        component={AllGoalsHome}
+        options={{
+          title: 'All Goals Home',
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color, size}) => (
+          <Ionicons name="home" size={size} color={color} />
+          )
+        }} 
+      /> 
+      <BottomTabs.Screen 
+        name="NewGoal" 
+        component={NewGoal}
+        options={{
+          title: 'Adding New Goal',
+          tabBarLabel: 'Add New Goal',
+          tabBarIcon: ({color, size}) => (
+          <Ionicons name="add-circle" size={size} color={color} />
+          )
+        }} 
+      />
     </BottomTabs.Navigator>
   )
 }
 
 export default function App() { // This is the root component
-  // const [modalIsVisible, setModalIsVisible] = useState(false)
-  // const [lifeGoals, setLifeGoals] = useState([]) // [] because we are handling array 
-
-  // function startAddGoalHandler() {
-  //   setModalIsVisible(true)
-  // }
-
-  // function endAddGoalHandler() {
-  //   setModalIsVisible(false)
-  // }
-
-  // function addGoalHandler (enteredGoalText) {
-  //   setLifeGoals(currentLifeGoals => [
-  //     ...currentLifeGoals, 
-  //     { text: enteredGoalText, id: Math.random().toString() }
-  //   ])
-  //   endAddGoalHandler()
-  // }
-
-  // function deleteGoalHandler(id) {
-  //   setLifeGoals(currentLifeGoals => {
-  //     return currentLifeGoals.filter((goal) => goal.id !== id)
-  //   })
-  // }
-
+  
   return (
     <>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="GoalsOverview" component={GoalsOverview} />
-          <Stack.Screen name="NewGoal" component={NewGoal} />
-        </Stack.Navigator>
-      {/* <View style={styles.appContainer}>
-        <Button 
-          title='Add New Goal' 
-          color="#5e0acc"
-          onPress={startAddGoalHandler}
-        />
-        <NewGoal 
-          visible={modalIsVisible} 
-          onAddGoal={addGoalHandler} 
-          onCancel={endAddGoalHandler} 
-        />
-        <Text> Goal in Progress </Text>
-        <View style={styles.goalsContainer}> 
-          <FlatList 
-            data={lifeGoals} 
-            renderItem={itemData => {
-              return <GoalItem 
-                        text={itemData.item.text} 
-                        id={itemData.item.id}
-                        onDeleteItem={deleteGoalHandler}
-                      />
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+            headerTintColor: 'white'
           }}
-          keyExtractor={(item, index) => {
-            return item.id
-          }}
+        >
+          <Stack.Screen name="GoalsOverview" 
+            component={GoalsOverview}
+            options={{ headerShown: false }}
           />
-        <Text> Completed Goals </Text> 
-        </View>
-      </View> */}
+          <Stack.Screen 
+            name="ManageGoal" 
+            component={ManageGoal}
+            options={{
+              presentation: 'modal'
+            }} 
+          />
+        </Stack.Navigator>
       </NavigationContainer>
     </>
   );

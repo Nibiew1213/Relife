@@ -1,49 +1,50 @@
 import { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, Modal, Image } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Modal, Image } from 'react-native'
 
 function GoalInput(props) {
-    const [enteredGoalTitle, setEnteredGoalTitle] = useState('') // '' because we are handling text
+    // const [enteredGoalTitle, setEnteredGoalTitle] = useState('') // '' because we are handling text
   
-    function goalInputHandler(enteredText) {
-        setEnteredGoalTitle(enteredText)
-    }
+    // function goalInputHandler(enteredText) {
+    //     setEnteredGoalTitle(enteredText)
+    // }
     
-    function addGoalHandler() {
-        props.onAddGoal(enteredGoalTitle)
-        setEnteredGoalTitle('')
-    }
+    // function addGoalHandler() {
+    //     props.onAddGoal(enteredGoalTitle)
+    //     setEnteredGoalTitle('')
+    // }
      
     return (
-        <Modal visible={props.visible} animationType="slide"> 
-            <View style={styles.inputContainer}>
-                <Image style={styles.image} source={require('../assets/images/addNewGoal.png')} />
-                <TextInput 
-                    style={styles.textInput} 
-                    placeholder='New Goal Title' 
-                    onChangeText={goalInputHandler} 
-                    value={enteredGoalTitle}
-                    maxLength={70}
-                    autoCapitalize="none"
-                    autoCorrect={false} 
-                />
-                <TextInput 
-                    style={styles.textInput} 
-                    placeholder='Description' 
-                />
-                <TextInput
-                    style={styles.textInput} 
-                    placeholder='Targeted Completion Date'
-                />
-                <View style={styles.buttonContainer}>
-                    <View style={styles.button}>
-                        <Button title='Add Goal' onPress={addGoalHandler} color="#5e0fcc"/>
-                    </View>
-                    <View style={styles.button}>
-                        <Button title='Cancel' onPress={props.onCancel} color="#f31282"/>
-                    </View>
-                </View>
-            </View>
-        </Modal>
+        <Text>Add New Goal Screen</Text>
+        // <Modal visible={props.visible} animationType="slide"> 
+        //     <View style={styles.inputContainer}>
+        //         <Image style={styles.image} source={require('../assets/images/addNewGoal.png')} />
+        //         <TextInput 
+        //             style={styles.textInput} 
+        //             placeholder='New Goal Title' 
+        //             onChangeText={goalInputHandler} 
+        //             value={enteredGoalTitle}
+        //             maxLength={70}
+        //             autoCapitalize="none"
+        //             autoCorrect={false} 
+        //         />
+        //         <TextInput 
+        //             style={styles.textInput} 
+        //             placeholder='Description' 
+        //         />
+        //         <TextInput
+        //             style={styles.textInput} 
+        //             placeholder='Targeted Completion Date'
+        //         />
+        //         <View style={styles.buttonContainer}>
+        //             <View style={styles.button}>
+        //                 <Button title='Add Goal' onPress={addGoalHandler} color="#5e0fcc"/>
+        //             </View>
+        //             <View style={styles.button}>
+        //                 <Button title='Cancel' onPress={props.onCancel} color="#f31282"/>
+        //             </View>
+        //         </View>
+        //     </View>
+        // </Modal>
     )
 }
 

@@ -1,7 +1,7 @@
-import { Text } from 'react-native'
+import GoalsOutput from '../components/GoalsOutput/GoalsOutput'
 
 function AllGoalsHome() {
-    return <Text>AllGoalHome Screen</Text>
+    return <GoalsOutput />
 }
 
 export default AllGoalsHome
