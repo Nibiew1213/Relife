@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import GoalItem from './components/GoalItem'
 import NewGoalScreen from './screens/NewGoalScreen'
+import ProgGoalScreen from './screens/CompGoalScreen';
 
+const Stack = createNativeStackNavigator()
 
 export default function App() { // This is the root component
   const [modalIsVisible, setModalIsVisible] = useState(false)
@@ -34,7 +38,8 @@ export default function App() { // This is the root component
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="auto" />
+      <NavigationContainer>
       <View style={styles.appContainer}>
         <Button 
           title='Add New Goal' 
@@ -46,6 +51,7 @@ export default function App() { // This is the root component
           onAddGoal={addGoalHandler} 
           onCancel={endAddGoalHandler} 
         />
+        <Text> Goal in Progress </Text>
         <View style={styles.goalsContainer}> 
           <FlatList 
             data={lifeGoals} 
@@ -59,9 +65,11 @@ export default function App() { // This is the root component
           keyExtractor={(item, index) => {
             return item.id
           }}
-          /> 
+          />
+        <Text> Completed Goals </Text> 
         </View>
       </View>
+      </NavigationContainer>
     </>
   );
 }

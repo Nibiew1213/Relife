@@ -2,15 +2,15 @@ import { useState } from 'react'
 import { View, TextInput, Button, StyleSheet, Modal, Image } from 'react-native'
 
 function GoalInput(props) {
-    const [enteredGoalText, setEnteredGoalText] = useState('') // '' because we are handling text
+    const [enteredGoalTitle, setEnteredGoalTitle] = useState('') // '' because we are handling text
   
     function goalInputHandler(enteredText) {
-        setEnteredGoalText(enteredText)
+        setEnteredGoalTitle(enteredText)
     }
     
     function addGoalHandler() {
-        props.onAddGoal(enteredGoalText)
-        setEnteredGoalText('')
+        props.onAddGoal(enteredGoalTitle)
+        setEnteredGoalTitle('')
     }
      
     return (
@@ -21,7 +21,7 @@ function GoalInput(props) {
                     style={styles.textInput} 
                     placeholder='New Goal Title' 
                     onChangeText={goalInputHandler} 
-                    value={enteredGoalText}
+                    value={enteredGoalTitle}
                     maxLength={70}
                     autoCapitalize="none"
                     autoCorrect={false} 
