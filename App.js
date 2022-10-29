@@ -1,52 +1,69 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
+import { useState } from 'react'
+import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
+import AllGoalsHome from './screens/AllGoalsHome'
 import GoalItem from './components/GoalItem'
-import NewGoalScreen from './screens/NewGoalScreen'
-import ProgGoalScreen from './screens/CompGoalScreen';
+import NewGoal from './screens/NewGoal'
+import ProgressGoal from './screens/ProgressGoal'
+import CompletedGoal from './screens/CompletedGoal';
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator() // will hold an object that gives access to 2 components -> Navigator component and Register-Screens Component 
+const BottomTabs = createBottomTabNavigator() 
+
+function GoalsOverview() {
+  return (
+    <BottomTabs.Navigator>
+      <BottomTabs.Screen name="AllGoalsHome" component={AllGoalsHome} /> 
+      <BottomTabs.Screen name="NewGoal" component={NewGoal} />
+    </BottomTabs.Navigator>
+  )
+}
 
 export default function App() { // This is the root component
-  const [modalIsVisible, setModalIsVisible] = useState(false)
-  const [lifeGoals, setLifeGoals] = useState([]) // [] because we are handling array 
+  // const [modalIsVisible, setModalIsVisible] = useState(false)
+  // const [lifeGoals, setLifeGoals] = useState([]) // [] because we are handling array 
 
-  function startAddGoalHandler() {
-    setModalIsVisible(true)
-  }
+  // function startAddGoalHandler() {
+  //   setModalIsVisible(true)
+  // }
 
-  function endAddGoalHandler() {
-    setModalIsVisible(false)
-  }
+  // function endAddGoalHandler() {
+  //   setModalIsVisible(false)
+  // }
 
-  function addGoalHandler (enteredGoalText) {
-    setLifeGoals(currentLifeGoals => [
-      ...currentLifeGoals, 
-      { text: enteredGoalText, id: Math.random().toString() }
-    ])
-    endAddGoalHandler()
-  }
+  // function addGoalHandler (enteredGoalText) {
+  //   setLifeGoals(currentLifeGoals => [
+  //     ...currentLifeGoals, 
+  //     { text: enteredGoalText, id: Math.random().toString() }
+  //   ])
+  //   endAddGoalHandler()
+  // }
 
-  function deleteGoalHandler(id) {
-    setLifeGoals(currentLifeGoals => {
-      return currentLifeGoals.filter((goal) => goal.id !== id)
-    })
-  }
+  // function deleteGoalHandler(id) {
+  //   setLifeGoals(currentLifeGoals => {
+  //     return currentLifeGoals.filter((goal) => goal.id !== id)
+  //   })
+  // }
 
   return (
     <>
       <StatusBar style="auto" />
       <NavigationContainer>
-      <View style={styles.appContainer}>
+        <Stack.Navigator>
+          <Stack.Screen name="GoalsOverview" component={GoalsOverview} />
+          <Stack.Screen name="NewGoal" component={NewGoal} />
+        </Stack.Navigator>
+      {/* <View style={styles.appContainer}>
         <Button 
           title='Add New Goal' 
           color="#5e0acc"
           onPress={startAddGoalHandler}
         />
-        <NewGoalScreen 
+        <NewGoal 
           visible={modalIsVisible} 
           onAddGoal={addGoalHandler} 
           onCancel={endAddGoalHandler} 
@@ -68,7 +85,7 @@ export default function App() { // This is the root component
           />
         <Text> Completed Goals </Text> 
         </View>
-      </View>
+      </View> */}
       </NavigationContainer>
     </>
   );
