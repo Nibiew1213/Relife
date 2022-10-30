@@ -14,6 +14,7 @@ import CompletedGoal from './screens/CompletedGoal';
 
 import { GlobalStyles } from './constants/styles'
 import IconButton from './components/UI/IconButton'
+import GoalsContextProvider from './store/goals-context'
 
 const Stack = createNativeStackNavigator() // will hold an object that gives access to 2 components -> Navigator component and Register-Screens Component 
 const BottomTabs = createBottomTabNavigator() 
@@ -68,27 +69,29 @@ export default function App() { // This is the root component
   
   return (
     <>
-      <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-            headerTintColor: 'white'
-          }}
-        >
-          <Stack.Screen name="GoalsOverview" 
-            component={GoalsOverview}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen 
-            name="ManageGoal" 
-            component={ManageGoal}
-            options={{
-              presentation: 'modal'
-            }} 
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <StatusBar style="light" />
+      <GoalsContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+              headerTintColor: 'white'
+            }}
+          >
+            <Stack.Screen name="GoalsOverview" 
+              component={GoalsOverview}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen 
+              name="ManageGoal" 
+              component={ManageGoal}
+              options={{
+                presentation: 'modal'
+              }} 
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GoalsContextProvider>
     </>
   );
 }

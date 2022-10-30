@@ -1,33 +1,18 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 
 import { GlobalStyles } from '../../constants/styles'
 import GoalsList from './GoalsList'
 
-const DUMMY_GOALS = [
-    {
-        id: 'g1',
-        title: 'Pass IPPT',
-        description: 'Exercise alot',
-        date: new Date('2021-12-19')
-    },
-    {
-        id: 'g2',
-        title: 'Pass driving Test',
-        description: 'Practice Driving',
-        date: new Date('2022-01-05')
-    },
-    {
-        id: 'g3',
-        title: 'Pass General assembly',
-        description: 'Complete projects',
-        date: new Date('2021-12-01')
-    },
-]
+function GoalsOutput({ goals, fallbackText }) {
+    let content = <Text style={styles.infoText}>{fallbackText}</Text>
 
-function GoalsOutput({ goals }) {
+    if (goals.length > 0) {
+        content = <GoalsList goals={goals} />
+    }
+
     return (
         <View style={styles.container}>
-            <GoalsList goals={DUMMY_GOALS} />
+            {content}
         </View>
     )
 }
@@ -40,5 +25,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         padding: 0,
         backgroundColor: GlobalStyles.colors.primary700
+    },
+    infoText: {
+        color: 'white',
+        fontSize: 16, 
+        textAlign:'center',
+        marginTop: 32
     }
 })

@@ -1,11 +1,14 @@
-import { useLayoutEffect } from 'react'
+import { useContext, useLayoutEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import Button from '../components/UI/Button'
 import IconButton from '../components/UI/IconButton'
 import { GlobalStyles } from '../constants/styles'
+import { GoalsContext } from '../store/goals-context'
 
 function ManageGoal({route, navigation}) {
+    const goalsCtx = useContext(GoalsContext)
+
     const editedGoalId = route.params?.goalId // goalId as stated in GoalItem Component, params? to determine retreving existing goal or adding new goal
     const isEditing = !!editedGoalId // !! is to convert a value into boolean, falsy into false or truthy into true
 
@@ -15,11 +18,34 @@ function ManageGoal({route, navigation}) {
         })
     }, [navigation, isEditing]) // dependecies of navigation prop and isEditing helper constant
 
-    function deleteGoalHandler() {}
+    function deleteGoalHandler() {
+        goalsCtx.deleteGoal(editedGoalId)
+        navigation.goBack()
+    }
 
-    function cancelHandler() {}
+    function cancelHandler() {
+        navigation.goBack()
+    }
 
-    function confirmHandler() {}
+    function confirmHandler() {
+        if (isEditing) {
+            goalsCtx.updateGoal(
+                editedGoalId,
+                {
+                    title: 'Testtt', 
+                    description: 'Test!!!', 
+                    date: new Date('2022-05-20')
+                }
+            )
+        } else {
+            goalsCtx.addGoal({
+                title: 'Test', 
+                description: 'Test!!!!!!!', 
+                date: new Date('2022-05-19')
+            })
+        }
+        navigation.goBack()
+    }
 
     return (
         <View style={styles.container}>
