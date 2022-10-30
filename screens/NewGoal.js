@@ -33,7 +33,7 @@ function GoalInput(props) {
         //         />
         //         <TextInput
         //             style={styles.textInput} 
-        //             placeholder='Targeted Completion Date'
+        //             placeholder='Targeted Completion '
         //         />
         //         <View style={styles.buttonContainer}>
         //             <View style={styles.button}>

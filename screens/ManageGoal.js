@@ -1,6 +1,7 @@
 import { useContext, useLayoutEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 
+import GoalForm from '../components/ManageGoal/GoalForm'
 import Button from '../components/UI/Button'
 import IconButton from '../components/UI/IconButton'
 import { GlobalStyles } from '../constants/styles'
@@ -11,6 +12,9 @@ function ManageGoal({route, navigation}) {
 
     const editedGoalId = route.params?.goalId // goalId as stated in GoalItem Component, params? to determine retreving existing goal or adding new goal
     const isEditing = !!editedGoalId // !! is to convert a value into boolean, falsy into false or truthy into true
+
+    const selectedGoal = goalsCtx.goals.find(
+        (goal) => goal.id === editedGoalId) // selecting goal to prefill form for editing
 
     useLayoutEffect(() => { // useEffect to prevent flickering of old to new content
         navigation.setOptions({ // method to set values like title of screen
@@ -27,36 +31,23 @@ function ManageGoal({route, navigation}) {
         navigation.goBack()
     }
 
-    function confirmHandler() {
+    function confirmHandler(goalData) {
         if (isEditing) {
-            goalsCtx.updateGoal(
-                editedGoalId,
-                {
-                    title: 'Testtt', 
-                    description: 'Test!!!', 
-                    date: new Date('2022-05-20')
-                }
-            )
+            goalsCtx.updateGoal(editedGoalId, goalData)
         } else {
-            goalsCtx.addGoal({
-                title: 'Test', 
-                description: 'Test!!!!!!!', 
-                date: new Date('2022-05-19')
-            })
+            goalsCtx.addGoal(goalData)
         }
         navigation.goBack()
     }
 
     return (
         <View style={styles.container}>
-            <View style={styles.buttons}>
-                <Button style={styles.button} mode='flat' onPress={cancelHandler}>
-                    Cancel
-                </Button>
-                <Button style={styles.button} onPress={confirmHandler}>
-                    {isEditing ? 'Update' : 'Add'}
-                </Button>
-            </View>
+            <GoalForm
+                submitButtonLabel={isEditing ? 'Update' : 'Add'}
+                onSubmit={confirmHandler} 
+                onCancel={cancelHandler}
+                defaultValues={selectedGoal}
+            />
             {isEditing && (
                 <View style={styles.deleteContainer}>
                     <IconButton 
@@ -78,15 +69,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 24,
         backgroundColor: GlobalStyles.colors.primary800    
-    },
-    buttons: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    button: {
-        minWidth: 120,
-        marginHorizontal: 8
     },
     deleteContainer: {
         marginTop: 16,
