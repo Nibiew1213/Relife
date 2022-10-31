@@ -1,29 +1,9 @@
 import { createContext, useReducer } from "react";
 
-const DUMMY_GOALS = [
-    {
-        id: 'g1',
-        title: 'Pass IPPT',
-        description: 'Exercise alot',
-        date: new Date('2021-12-19')
-    },
-    {
-        id: 'g2',
-        title: 'Pass driving Test',
-        description: 'Practice Driving',
-        date: new Date('2022-01-05')
-    },
-    {
-        id: 'g3',
-        title: 'Pass General assembly',
-        description: 'Complete projects',
-        date: new Date('2021-12-01')
-    },
-]
-
 export const GoalsContext = createContext({
     goals: [],
     addGoal: ({ title, description, date }) => {},
+    setGoals: (goals) => {},
     deleteGoal: (id) => {},
     updateGoal: (id, {title, description, date}) => {}
 })
@@ -31,8 +11,10 @@ export const GoalsContext = createContext({
 function goalsReducer(state, action) {
     switch (action.type) {
         case 'ADD':
-            const id = new Date().toString() + Math.random().toString()
-            return [{ ...action.payload, id: id }, ...state]
+            return [action.payload, ...state]
+        case 'SET':
+            const inverted = action.payload.reverse() // to set display order of list
+            return inverted
         case 'UPDATE':
             const updatableGoalIndex = state.findIndex(
                 (goal) => goal.id === action.payload.id
@@ -50,10 +32,14 @@ function goalsReducer(state, action) {
 }
 
 function GoalsContextProvider({ children }) {
-    const [goalsState, dispatch] = useReducer(goalsReducer, DUMMY_GOALS)
+    const [goalsState, dispatch] = useReducer(goalsReducer, [])
 
     function addGoal(goalData) {
         dispatch({ type: 'ADD', payload: goalData })
+    }
+
+    function setGoals(goals) {
+        dispatch({ type: 'SET', payload: goals })
     }
 
     function deleteGoal(id) {
@@ -66,6 +52,7 @@ function GoalsContextProvider({ children }) {
 
     const value = {
         goals: goalsState,
+        setGoals: setGoals,
         addGoal: addGoal,
         deleteGoal: deleteGoal,
         updateGoal: updateGoal
