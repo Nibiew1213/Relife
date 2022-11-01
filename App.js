@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect, } from 'react'
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
@@ -6,18 +6,103 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons' 
 
+import LoginScreen from './screens/LoginScreen';
+import SignupScreen from './screens/SignupScreen';
 import AllGoalsHome from './screens/AllGoalsHome'
-import GoalItem from './components/GoalsOutput/GoalItem'
 import NewGoal from './screens/NewGoal'
 import ManageGoal from './screens/ManageGoal'
-import CompletedGoal from './screens/CompletedGoal';
 
 import { GlobalStyles } from './constants/styles'
+import { Colors } from './constants/authStyles';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
 import IconButton from './components/UI/IconButton'
+import AuthIconButton from './components/UI/AuthIconButton';
 import GoalsContextProvider from './store/goals-context'
 
 const Stack = createNativeStackNavigator() // will hold an object that gives access to 2 components -> Navigator component and Register-Screens Component 
 const BottomTabs = createBottomTabNavigator() 
+
+function AuthStack() { // holds screens for login and register
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+    </Stack.Navigator>
+  )
+}
+
+function AuthenticatedStack() { // holds screens for authenticated users
+  const authCtx = useContext(AuthContext)
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen 
+        name="Welcome" 
+        component={WelcomeScreen} 
+        options={{
+          headerRight: ({ tintColor }) => (
+          <AuthIconButton 
+            icon="exit" 
+            color={tintColor} 
+            size={24} 
+            onPress={authCtx.logout} 
+          />
+          )
+        }} 
+      />
+      
+    </Stack.Navigator>
+  );
+}
+
+function Navigation() {
+  const authCtx = useContext(AuthContext)
+
+    return (
+       
+        <NavigationContainer>
+          {!authCtx.isAuthenticated && <AuthStack />}
+          {authCtx.isAuthenticated && <AuthenticatedStack />} 
+        </NavigationContainer> // switching between navigation stacks depending on Authenticated status 
+      
+  );
+}
+
+function Root() {
+  const [isTryingLogin, setIsTryingLogin] = useState(true)
+  const authCtx = useContext(AuthContext)
+
+  useEffect(() => {
+    async function fetchToken() {
+        const storedToken = await AsyncStorage.getItem('token')
+    
+        if (storedToken) {
+            authCtx.authenticate(storedToken)
+        }
+
+        setIsTryingLogin(false)
+    }   
+
+    fetchToken()
+  }, [])
+
+  if (isTryingLogin) {
+    return <AppLoading />
+  }
+
+  return <Navigation />
+}
 
 function GoalsOverview() {
   return (
