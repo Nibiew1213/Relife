@@ -23,3 +23,4 @@ export function createUser(email, password) {
 export function login(email, password) {
     return authenticate('signInWithPassword', email, password) // signInWithPassword written just as in FireBase Auth "Sign in with email / password" url segment, replace ${mode}  
 }
+
