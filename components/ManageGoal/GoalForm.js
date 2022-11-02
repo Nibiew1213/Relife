@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: 'white',
-        marginVertical: 24,
+        marginVertical: 1,
         textAlign: 'center'
     },
     errorText: {

@@ -51,7 +51,16 @@ function AuthenticatedStack() { // holds screens for authenticated users
       >
         <Stack.Screen name="GoalsOverview" 
           component={GoalsOverview}
-          options={{ headerShown: false }}
+          options={{
+            headerRight: ({ tintColor }) => (
+            <AuthIconButton 
+              icon="exit" 
+              color={tintColor} 
+              size={24} 
+              onPress={authCtx.logout} 
+            />
+            )
+          }} 
         />
         <Stack.Screen 
           name="ManageGoal" 
@@ -136,9 +145,9 @@ function GoalsOverview() {
       /> 
       <BottomTabs.Screen 
         name="NewGoal" 
-        component={NewGoal}
+        component={ManageGoal}
         options={{
-          title: 'Adding New Goal',
+          title: 'Add New Goal',
           tabBarLabel: 'Add New Goal',
           tabBarIcon: ({color, size}) => (
           <Ionicons name="add-circle" size={size} color={color} />
