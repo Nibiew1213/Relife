@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { View, Text, StyleSheet, Alert } from "react-native"
 
 import Input from "./Input"
 import Button from "../UI/Button"
 import { getFormattedDate } from "../../util/date"
 import { GlobalStyles } from "../../constants/styles"
+import { AuthContext } from "../../store/auth-context"
+
 
 function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     const [inputs, setInputs] = useState({
@@ -34,10 +36,13 @@ function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     }
 
     function submitHandler() {
+        // const authCtx = useContext(AuthContext)
         const goalData ={
+            
             title: inputs.title.value,
             description: inputs.description.value,
-            date: new Date(inputs.date.value) // Date constructor function converts string to date object
+            date: new Date(inputs.date.value), // Date constructor function converts string to date object
+            // UUID: authCtx.UUID
         }
 
         // helper constants for user input validation

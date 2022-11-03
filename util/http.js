@@ -1,6 +1,8 @@
 import axios from 'axios'
+import { useContext } from 'react'
+import { AuthContext } from '../store/auth-context'
 
-const BACKEND_URL = 'https://relife-1cb93-default-rtdb.asia-southeast1.firebasedatabase.app/'
+const BACKEND_URL = 'https://relife-test-64ea0-default-rtdb.asia-southeast1.firebasedatabase.app//'
 
 export async function storeGoal(goalData) {
     const response = await axios.post(BACKEND_URL + '/goals.json', goalData)
@@ -10,10 +12,10 @@ export async function storeGoal(goalData) {
 
 export async function fetchGoals() {
     const response = await axios.get(BACKEND_URL + '/goals.json')
-
+    
     const goals = []
-
     // console.log(response.data)
+    
     for (const key in response.data) {
         const goalObj = {
             id: key,

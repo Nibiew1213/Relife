@@ -16,6 +16,7 @@ function LoginScreen() {
         try {
             const token = await login(email, password)
             authCtx.authenticate(token)
+            //useState => email
         } catch (error) {
             Alert.alert(
                 'Authentication failed!',

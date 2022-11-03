@@ -49,7 +49,7 @@ function AuthenticatedStack() { // holds screens for authenticated users
           headerTintColor: 'white'
         }}
       >
-        <Stack.Screen name="GoalsOverview" 
+        <Stack.Screen name="Goals Overview" 
           component={GoalsOverview}
           options={{
             headerRight: ({ tintColor }) => (
@@ -62,7 +62,7 @@ function AuthenticatedStack() { // holds screens for authenticated users
             )
           }} 
         />
-        <Stack.Screen 
+         <Stack.Screen 
           name="ManageGoal" 
           component={ManageGoal}
           options={{
@@ -78,13 +78,11 @@ function Navigation() {
   const authCtx = useContext(AuthContext)
 
     return (
-       
         <NavigationContainer independent={true}>
           {!authCtx.isAuthenticated && <AuthStack />}
           {authCtx.isAuthenticated && <AuthenticatedStack />} 
-        </NavigationContainer> // switching between navigation stacks depending on Authenticated status 
-      
-  );
+        </NavigationContainer> // switching between navigation stacks depending on Authenticated status   
+  )
 }
 
 function Root() {
@@ -119,24 +117,14 @@ function GoalsOverview() {
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: 'white',
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-        tabBarActiveTintColor: GlobalStyles.colors.accent500,
-        headerRight: ({tintColor}) => (
-          <IconButton 
-            icon="add" 
-            size={24} 
-            color={tintColor} 
-            onPress={() => {
-              navigation.navigate('ManageGoal')
-            }}
-          />
-        )        
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,       
       })}
       >
       <BottomTabs.Screen 
         name="AllGoalsHome" 
         component={AllGoalsHome}
         options={{
-          title: 'All Goals Home',
+          title: "person's goal",
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
           <Ionicons name="home" size={size} color={color} />
