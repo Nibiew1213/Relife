@@ -1,23 +1,114 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect, } from 'react'
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons' 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import AppLoading from 'expo-app-loading'
 
+import LoginScreen from './screens/LoginScreen';
+import SignupScreen from './screens/SignupScreen';
 import AllGoalsHome from './screens/AllGoalsHome'
-import GoalItem from './components/GoalsOutput/GoalItem'
 import NewGoal from './screens/NewGoal'
 import ManageGoal from './screens/ManageGoal'
-import CompletedGoal from './screens/CompletedGoal';
 
 import { GlobalStyles } from './constants/styles'
+import { Colors } from './constants/authStyles';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
 import IconButton from './components/UI/IconButton'
+import AuthIconButton from './components/UI/AuthIconButton';
 import GoalsContextProvider from './store/goals-context'
 
 const Stack = createNativeStackNavigator() // will hold an object that gives access to 2 components -> Navigator component and Register-Screens Component 
 const BottomTabs = createBottomTabNavigator() 
+
+function AuthStack() { // holds screens for login and register
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+    </Stack.Navigator>
+  )
+}
+
+function AuthenticatedStack() { // holds screens for authenticated users
+  const authCtx = useContext(AuthContext)
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+          headerTintColor: 'white'
+        }}
+      >
+        <Stack.Screen name="Goals Overview" 
+          component={GoalsOverview}
+          options={{
+            headerRight: ({ tintColor }) => (
+            <AuthIconButton 
+              icon="exit" 
+              color={tintColor} 
+              size={24} 
+              onPress={authCtx.logout} 
+            />
+            )
+          }} 
+        />
+         <Stack.Screen 
+          name="ManageGoal" 
+          component={ManageGoal}
+          options={{
+            presentation: 'modal'
+          }} 
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function Navigation() {
+  const authCtx = useContext(AuthContext)
+
+    return (
+        <NavigationContainer independent={true}>
+          {!authCtx.isAuthenticated && <AuthStack />}
+          {authCtx.isAuthenticated && <AuthenticatedStack />} 
+        </NavigationContainer> // switching between navigation stacks depending on Authenticated status   
+  )
+}
+
+function Root() {
+  const [isTryingLogin, setIsTryingLogin] = useState(true)
+  const authCtx = useContext(AuthContext)
+
+  useEffect(() => {
+    async function fetchToken() {
+        const storedToken = await AsyncStorage.getItem('token')
+    
+        if (storedToken) {
+            authCtx.authenticate(storedToken)
+        }
+
+        setIsTryingLogin(false)
+    }   
+
+    fetchToken()
+  }, [])
+
+  if (isTryingLogin) {
+    return <AppLoading />
+  }
+
+  return <Navigation />
+}
 
 function GoalsOverview() {
   return (
@@ -26,24 +117,14 @@ function GoalsOverview() {
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: 'white',
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-        tabBarActiveTintColor: GlobalStyles.colors.accent500,
-        headerRight: ({tintColor}) => (
-          <IconButton 
-            icon="add" 
-            size={24} 
-            color={tintColor} 
-            onPress={() => {
-              navigation.navigate('ManageGoal')
-            }}
-          />
-        )        
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,       
       })}
       >
       <BottomTabs.Screen 
         name="AllGoalsHome" 
         component={AllGoalsHome}
         options={{
-          title: 'All Goals Home',
+          title: "person's goal",
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
           <Ionicons name="home" size={size} color={color} />
@@ -52,9 +133,9 @@ function GoalsOverview() {
       /> 
       <BottomTabs.Screen 
         name="NewGoal" 
-        component={NewGoal}
+        component={ManageGoal}
         options={{
-          title: 'Adding New Goal',
+          title: 'Add New Goal',
           tabBarLabel: 'Add New Goal',
           tabBarIcon: ({color, size}) => (
           <Ionicons name="add-circle" size={size} color={color} />
@@ -70,28 +151,11 @@ export default function App() { // This is the root component
   return (
     <>
       <StatusBar style="light" />
-      <GoalsContextProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-              headerTintColor: 'white'
-            }}
-          >
-            <Stack.Screen name="GoalsOverview" 
-              component={GoalsOverview}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen 
-              name="ManageGoal" 
-              component={ManageGoal}
-              options={{
-                presentation: 'modal'
-              }} 
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </GoalsContextProvider>
+      <AuthContextProvider>
+        <GoalsContextProvider>
+          <Root />
+        </GoalsContextProvider>
+      </AuthContextProvider>
     </>
   );
 }
@@ -106,3 +170,4 @@ const styles = StyleSheet.create({ // Styling for root component
     flex: 5
   }
 })
+
