@@ -11,7 +11,6 @@ import AppLoading from 'expo-app-loading'
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import AllGoalsHome from './screens/AllGoalsHome'
-import NewGoal from './screens/NewGoal'
 import ManageGoal from './screens/ManageGoal'
 
 import { GlobalStyles } from './constants/styles'

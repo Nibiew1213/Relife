@@ -1,11 +1,11 @@
 import { useContext, useState } from "react"
 import { View, Text, StyleSheet, Alert } from "react-native"
 
-import Input from "./Input"
+import GoalInput from "./GoalInput"
 import Button from "../UI/Button"
 import { getFormattedDate } from "../../util/date"
 import { GlobalStyles } from "../../constants/styles"
-import { AuthContext } from "../../store/auth-context"
+
 
 
 function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
@@ -75,7 +75,7 @@ function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     return (
         <View style={styles.form}>
             <Text style={styles.heading}>Your Goal</Text>
-            <Input 
+            <GoalInput 
                 label="Title"
                 invalid={!inputs.title.isValid}  
                 textInputConfig={{
@@ -85,7 +85,7 @@ function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
                         value: inputs.title.value
                 }}
             />
-            <Input 
+            <GoalInput 
                 label="Description"
                 invalid={!inputs.description.isValid}  
                 textInputConfig={{
@@ -96,7 +96,7 @@ function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
                         value: inputs.description.value
                 }}
             />
-            <Input 
+            <GoalInput 
                 label="Targeted Completion Date"
                 invalid={!inputs.date.isValid} 
                 textInputConfig={{

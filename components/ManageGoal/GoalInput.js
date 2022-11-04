@@ -2,7 +2,7 @@ import { View, Text, TextInput, StyleSheet } from "react-native"
 
 import { GlobalStyles } from "../../constants/styles"
 
-function Input({ label, invalid, style, textInputConfig }) {
+function GoalInput({ label, invalid, style, textInputConfig }) {
 
     const inputStyles = [styles.input]
 
@@ -22,7 +22,7 @@ function Input({ label, invalid, style, textInputConfig }) {
     )
 }
 
-export default Input
+export default GoalInput
 
 const styles = StyleSheet.create({
     inputContainer: {
