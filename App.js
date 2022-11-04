@@ -28,12 +28,12 @@ function AuthStack() { // holds screens for login and register
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: 'white',
+        headerTitleStyle : { color: 'black'},
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Register" component={SignupScreen} />
     </Stack.Navigator>
   )
 }
@@ -45,16 +45,18 @@ function AuthenticatedStack() { // holds screens for authenticated users
       <Stack.Navigator
         screenOptions={{
           headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-          headerTintColor: 'white'
+          headerTitleStyle : {
+            color: 'black'
+          }
         }}
       >
-        <Stack.Screen name="Goals Overview" 
+        <Stack.Screen name="Relife" 
           component={GoalsOverview}
           options={{
             headerRight: ({ tintColor }) => (
             <AuthIconButton 
               icon="exit" 
-              color={tintColor} 
+              color={"black"} 
               size={24} 
               onPress={authCtx.logout} 
             />
@@ -123,7 +125,8 @@ function GoalsOverview() {
         name="AllGoalsHome" 
         component={AllGoalsHome}
         options={{
-          title: "person's goal",
+          title: "Person's goal",
+          headerTitleStyle : { color: 'f252525'},
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
           <Ionicons name="home" size={size} color={color} />

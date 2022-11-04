@@ -1,5 +1,5 @@
 import { useContext, useLayoutEffect, useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 
 import GoalForm from '../components/ManageGoal/GoalForm'
 import ErrorOverlay from '../components/UI/ErrorOverLay'
@@ -23,7 +23,7 @@ function ManageGoal({route, navigation}) {
 
     useLayoutEffect(() => { // useEffect to prevent flickering of old to new content
         navigation.setOptions({ // method to set values like title of screen
-            title: isEditing ? 'Edit Goal' : 'Add Goal' // turnery to set dynamic title of screen
+            title: isEditing ? 'Edit Goal' : 'Add New Goal' // turnery to set dynamic title of screen
         })
     }, [navigation, isEditing]) // dependecies of navigation prop and isEditing helper constant
 
@@ -85,6 +85,7 @@ function ManageGoal({route, navigation}) {
                         size={36} 
                         onPress={deleteGoalHandler} 
                     />
+                    <Text style={styles.deleteText}>Delete Goal</Text>
                 </View>
             )}           
         </View>
@@ -100,10 +101,15 @@ const styles = StyleSheet.create({
         backgroundColor: GlobalStyles.colors.primary800    
     },
     deleteContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 16,
         paddingTop: 8,
         borderTopWidth: 2,
-        borderTopColor: GlobalStyles.colors.primary200,
-        alignItems: 'center'
+        borderTopColor: GlobalStyles.colors.primary200
+    },
+    deleteText: {
+        color: '#9b095c'
     }
+
 })

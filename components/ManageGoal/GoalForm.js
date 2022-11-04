@@ -81,6 +81,7 @@ function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
                 textInputConfig={{
                     autoCorrect: false,
                     autoCapitalize: 'none',
+                    maxLength: 26,
                     onChangeText: inputChangedHandler.bind(this, 'title'), // two-way binding
                         value: inputs.title.value
                 }}

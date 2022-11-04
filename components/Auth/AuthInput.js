@@ -2,14 +2,14 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 import { Colors } from '../../constants/authStyles';
 
-function AuthInput({ label, keyboardType, secure, onUpdateValue, value, isInvalid }) {
+function AuthInput({ label, keyboardType, secure, onUpdateValue, value, isInvalid, textInputConfig }) {
   return (
     <View style={styles.inputContainer}>
       <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
         {label}
       </Text>
       <TextInput
-        style={[styles.input, isInvalid && styles.inputInvalid]}
+        style={[styles.input, isInvalid && styles.inputInvalid]} {...textInputConfig}
         autoCapitalize={false}
         keyboardType={keyboardType}
         secureTextEntry={secure}

@@ -26,6 +26,7 @@ function GoalItem({ id, title, description, date}) {
                     </Text>
                 </View>
                 <View style={styles.dateContainer}>
+                    <Text style={styles.target}>Target</Text>
                     <Text style={styles.date}>{getFormattedDate(date)}</Text>
                 </View>
             </View>
@@ -59,15 +60,18 @@ const styles = StyleSheet.create({
     dateContainer: {
         paddingHorizontal: 5,
         paddingVertical: 4,
-        backgroundColor: 'white',
+        backgroundColor: '#e2cf7d',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,
         minWidth: 80
     },
     date: {
-        color: GlobalStyles.colors.primary500,
+        color: GlobalStyles.colors.accent500,
         fontWeight: 'bold',
         fontSize: 12,
+    },
+    target: {
+        fontSize: 12
     }
 })

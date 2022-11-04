@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, Image } from 'react-native'
 
 import { GlobalStyles } from '../../constants/styles'
 import GoalsList from './GoalsList'
@@ -12,7 +12,7 @@ function GoalsOutput({ goals, fallbackText }) {
 
     return (
         <View style={styles.container}>
-            {content}
+                {content}     
         </View>
     )
 }
@@ -22,7 +22,7 @@ export default GoalsOutput
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 24,
+        paddingHorizontal: 5,
         padding: 0,
         backgroundColor: GlobalStyles.colors.primary800
     },

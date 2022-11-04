@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react'
+import { Alert, StyleSheet, View, Text, Image, ImageBackground } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-import FlatButton from '../UI/FlatButton';
-import AuthForm from './AuthForm';
-import { Colors } from '../../constants/authStyles';
+import FlatButton from '../UI/FlatButton'
+import AuthForm from './AuthForm'
+import { Colors } from '../../constants/authStyles'
 
 function AuthContent({ isLogin, onAuthenticate }) {
     const navigation = useNavigation()
@@ -18,7 +18,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
 
     function switchAuthModeHandler() {
         if (isLogin) {
-            navigation.replace('Signup') // .replace doesn't gives back button, unlike .navigate
+            navigation.replace('Register') // .replace doesn't gives back button, unlike .navigate
         } else {
             navigation.replace('Login')
         }
@@ -53,17 +53,26 @@ function AuthContent({ isLogin, onAuthenticate }) {
     }
 
   return (
-    <View style={styles.authContent}>
-      <AuthForm
-        isLogin={isLogin}
-        onSubmit={submitHandler}
-        credentialsInvalid={credentialsInvalid}
-      />
-      <View style={styles.buttons}>
-        <FlatButton onPress={switchAuthModeHandler}>
-          {isLogin ? 'Create a new user' : 'Log in instead'}
-        </FlatButton>
+    <View>
+      <View style={styles.title}>
+        <Text style={styles.titleText}>Relife</Text>
       </View>
+      <View style={styles.authContent}>
+        <AuthForm
+          isLogin={isLogin}
+          onSubmit={submitHandler}
+          credentialsInvalid={credentialsInvalid}
+        />
+        <View style={styles.buttons}>
+          <FlatButton onPress={switchAuthModeHandler}>
+            {isLogin ? 'Register' : 'Log in instead'}
+          </FlatButton>
+        </View>
+      </View>
+      <Image 
+        source={require('../../assets/images/start.png')}
+        style={styles.image}
+      />
     </View>
   );
 }
@@ -72,7 +81,6 @@ export default AuthContent;
 
 const styles = StyleSheet.create({
   authContent: {
-    marginTop: 64,
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 8,
@@ -86,4 +94,17 @@ const styles = StyleSheet.create({
   buttons: {
     marginTop: 8,
   },
+  title: {
+   alignItems: 'center',
+   marginVertical: 20,
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: 'bold'
+  },
+  image: {
+    width: 400,
+    height: 300,
+    marginTop: 20
+  }
 });

@@ -1,4 +1,4 @@
-import { FlatList, Text } from "react-native"
+import { FlatList, View, Image, StyleSheet } from "react-native"
 import GoalItem from "./GoalItem"
 
 function renderGoalItem(itemData) {
@@ -7,12 +7,18 @@ function renderGoalItem(itemData) {
 
 function GoalsList({ goals }) {
     return (
-        <FlatList 
-            data={goals} 
-            renderItem={renderGoalItem} 
-            keyExtractor={(item) => item.id}
-        />
+        <View>
+            <FlatList 
+                data={goals} 
+                renderItem={renderGoalItem} 
+                keyExtractor={(item) => item.id}
+            />
+        </View>
     )
 }
 
 export default GoalsList
+
+const styles = StyleSheet.create({
+  
+})

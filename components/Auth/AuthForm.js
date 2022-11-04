@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 import AuthButton from '../UI/AuthButton';
 import AuthInput from './AuthInput';
@@ -52,6 +52,9 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
           value={enteredEmail}
           keyboardType="email-address"
           isInvalid={emailIsInvalid}
+          textInputConfig={{
+            placeholder: 'example@gmail.com'
+          }}
         />
         {!isLogin && (
           <AuthInput
@@ -68,6 +71,9 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
           secure
           value={enteredPassword}
           isInvalid={passwordIsInvalid}
+          textInputConfig={{
+            placeholder: 'Minimum of 7 characters'
+          }}
         />
         {!isLogin && (
           <AuthInput
