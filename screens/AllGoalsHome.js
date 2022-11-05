@@ -37,7 +37,7 @@ function AllGoalsHome() {
     return (
         <GoalsOutput 
             goals={goalsCtx.goals}
-            fallbackText="No registered goal found!" 
+            fallbackText={" \n No recorded goal found! \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Hit the bottom center tab to add your first Goal! "}
         />
     )
 }

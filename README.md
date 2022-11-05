@@ -42,6 +42,16 @@ Thus, this project named "Relife" was born. Instead of outdoor activities, users
 
 During development, the Android Emulator crashes or stall frequently if there are bugs involved within the code, which further lengthens the debugging time and pushes back the progress of the project. One solution that I have discovered to this problem is to close and restart the Android Emulator.
 
+With the learning of new technologies on our own accord, much time were spent on researching, exploring documentations and Trail & Error while coding. It will be preferable if there are more time given so as to progress the project further.
+
+<br/>
+
+## Things learn from doing this project
++ Improvement on React skills
++ Developent of mobile-app know-how
++ Difference between devloping Android and IOS
++ Screen responsiveness and sizes
+
 <br/>
 
 ## Stretch goals / Further improvements

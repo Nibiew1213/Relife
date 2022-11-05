@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
         backgroundColor: GlobalStyles.colors.primary800
     },
     infoText: {
-        color: 'white',
-        fontSize: 16, 
+        color: '#e2cf7d',
+        fontSize: 20, 
         textAlign:'center',
         marginTop: 32
     }

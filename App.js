@@ -12,6 +12,7 @@ import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import AllGoalsHome from './screens/AllGoalsHome'
 import ManageGoal from './screens/ManageGoal'
+import Profile from './screens/Profile'
 
 import { GlobalStyles } from './constants/styles'
 import { Colors } from './constants/authStyles';
@@ -20,7 +21,7 @@ import IconButton from './components/UI/IconButton'
 import AuthIconButton from './components/UI/AuthIconButton';
 import GoalsContextProvider from './store/goals-context'
 
-const Stack = createNativeStackNavigator() // will hold an object that gives access to 2 components -> Navigator component and Register-Screens Component 
+const Stack = createNativeStackNavigator() // will hold an object that gives access to 2 components  
 const BottomTabs = createBottomTabNavigator() 
 
 function AuthStack() { // holds screens for login and register
@@ -125,8 +126,9 @@ function GoalsOverview() {
         name="AllGoalsHome" 
         component={AllGoalsHome}
         options={{
-          title: "Person's goal",
-          headerTitleStyle : { color: 'f252525'},
+          title: "Goals History",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: 'f252525'},
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
           <Ionicons name="home" size={size} color={color} />
@@ -138,12 +140,28 @@ function GoalsOverview() {
         component={ManageGoal}
         options={{
           title: 'Add New Goal',
+          headerTitleAlign: "center",
+          headerTitleStyle : { color: 'f252525'},
           tabBarLabel: 'Add New Goal',
           tabBarIcon: ({color, size}) => (
           <Ionicons name="add-circle" size={size} color={color} />
           )
         }} 
       />
+      <BottomTabs.Screen 
+        name="Profile" 
+        component={Profile}
+        options={{
+          title: 'User Profile',
+          headerTitleAlign: "center",
+          headerTitleStyle : { color: 'f252525'},
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color, size}) => (
+          <Ionicons name="person-circle-outline" size={size} color={color} />
+          )
+        }} 
+      />
+
     </BottomTabs.Navigator>
   )
 }

@@ -41,8 +41,9 @@ const styles = StyleSheet.create({
         opacity: 0.75
     },
     goalItem: {
-        padding:12,
-        marginVertical: 8,
+        padding: 12,
+        marginVertical: 10,
+        marginHorizontal: 5,
         backgroundColor: GlobalStyles.colors.primary500,
         flexDirection: 'row',
         justifyContent: 'space-between',

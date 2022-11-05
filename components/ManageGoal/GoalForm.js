@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { View, Text, StyleSheet, Alert } from "react-native"
+import { View, Text, StyleSheet, Alert, Image } from "react-native"
 
 import GoalInput from "./GoalInput"
 import Button from "../UI/Button"
@@ -74,7 +74,6 @@ function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
 
     return (
         <View style={styles.form}>
-            <Text style={styles.heading}>Your Goal</Text>
             <GoalInput 
                 label="Title"
                 invalid={!inputs.title.isValid}  
@@ -120,6 +119,10 @@ function GoalForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
                     {submitButtonLabel}
                 </Button>
             </View>
+            <Image 
+                source={require('../../assets/images/target.png')}
+                style={styles.image}
+            />
         </View>
     )
 }
@@ -128,12 +131,12 @@ export default GoalForm
 
 const styles = StyleSheet.create({
     form: {
-        marginVertical: 40
+        marginVertical: 5
     },
     heading: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: 'white',
+        color: '#e2cf7d',
         marginVertical: 1,
         textAlign: 'center'
     },
@@ -151,4 +154,9 @@ const styles = StyleSheet.create({
         minWidth: 120,
         marginHorizontal: 8
     },
+    image: {
+        height: 150,
+        width: 350,
+        marginTop: 20
+    }
 })
